@@ -15,3 +15,8 @@ export interface IAddress {
     cidade: string;
     cep: string;
 }
+
+export interface ISigninUser {
+    username: string;
+    password: string;
+}

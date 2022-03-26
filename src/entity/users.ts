@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Column, Entity, Index, ObjectID, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class Users {
     @ObjectIdColumn()
+    @Index({ unique: true })
     _id: ObjectID;
 
     @Column()
@@ -13,15 +14,18 @@ export class Users {
     lastname: string;
 
     @Column()
+    @Index({ unique: true })
     username: string;
 
     @Column()
     password: string;
 
     @Column()
+    @Index({ unique: true })
     email: string;
 
     @Column()
+    @Index({ unique: true })
     phone: string;
 
     @Column()

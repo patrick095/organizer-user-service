@@ -50,7 +50,7 @@ export class AppService {
             throw new UserInvalidException();
         }
 
-        const userDb = await this.UsersRepo.findOne({ where: { username } });
+        const userDb = await this.UsersRepo.findOne({ where: [{ username }, { email }, { phone }] });
 
         if (userDb) {
             throw new UserRegisteredException();

@@ -1,4 +1,5 @@
-import { ArgumentMetadata, HttpException, HttpStatus, Injectable, PipeTransform } from '@nestjs/common';
+import { ArgumentMetadata, HttpStatus, Injectable, PipeTransform } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 
@@ -7,7 +8,10 @@ export class CustomValidationPipe implements PipeTransform {
     async transform(value: any, metadata: ArgumentMetadata) {
         const { metatype } = metadata;
         if (this.isEmpty(value)) {
-            throw new HttpException('Validation failed: No payload submitted', HttpStatus.BAD_REQUEST);
+            throw new RpcException({
+                message: 'Validation failed: No payload submitted',
+                status: HttpStatus.BAD_REQUEST,
+            });
         }
 
         const object = plainToClass(metatype, value);
@@ -15,7 +19,10 @@ export class CustomValidationPipe implements PipeTransform {
         const errors = await validate(object);
 
         if (errors.length > 0) {
-            throw new HttpException(`Validation failed: ${this.formatErrors(errors)}`, HttpStatus.BAD_REQUEST);
+            throw new RpcException({
+                message: `Validation failed: ${this.formatErrors(errors)}`,
+                status: HttpStatus.BAD_REQUEST,
+            });
         }
 
         return value;

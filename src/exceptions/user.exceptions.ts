@@ -1,19 +1,20 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 
-export class UserNotFoundException extends HttpException {
+export class UserNotFoundException extends RpcException {
     constructor() {
-        super('User not found!', HttpStatus.NOT_FOUND);
+        super({ message: 'User not found!', status: HttpStatus.NOT_FOUND });
     }
 }
 
-export class UserInvalidException extends HttpException {
+export class UserInvalidException extends RpcException {
     constructor() {
-        super('Invalid username or password!', HttpStatus.UNAUTHORIZED);
+        super({ message: 'Invalid username or password!', status: HttpStatus.UNAUTHORIZED });
     }
 }
 
-export class UserRegisteredException extends HttpException {
+export class UserRegisteredException extends RpcException {
     constructor() {
-        super('User already exists!', HttpStatus.BAD_REQUEST);
+        super({ message: 'User already exists!', status: HttpStatus.BAD_REQUEST });
     }
 }
