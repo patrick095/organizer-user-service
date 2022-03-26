@@ -39,4 +39,6 @@ export class Users {
 
     @Column()
     sessions: Array<string>;
+
+    $or: Array<any>;
 }
