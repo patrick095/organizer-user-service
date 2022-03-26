@@ -26,6 +26,9 @@
 
 Esse microsserviço terá todas as funções relacionadas ao usuário da aplicação.
 
+## Serviço Base
+[Organizer-microservice](https://github.com/patrick095/organizer-microservice)
+
 ## Installation
 
 ```bash
