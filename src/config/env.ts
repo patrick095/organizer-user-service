@@ -10,9 +10,10 @@ export class Env {
     }
 
     public get MongoUri(): string {
-        return this.isProd
-            ? process.env?.TYPEORM_URL.toString()
-            : 'mongodb://root:123456@localhost:27017/Organizer-user?authSource=admin';
+        return (
+            process.env?.TYPEORM_URL.toString() ??
+            'mongodb://root:123456@localhost:27017/Organizer-user?authSource=admin'
+        );
     }
 
     public get MongoDBName(): string {

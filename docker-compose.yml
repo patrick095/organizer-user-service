@@ -3,25 +3,30 @@ services:
         build:
             context: ./
             target: dev
+        container_name: organizer-user-service
         volumes:
             - .:/home/node/app
         restart: always
         env_file: .env
         networks:
             - organizer
-        command: npm run dev
+        ports:
+            - '3001:3001'
+        command: npm start
         environment:
-            - TYPEORM_URL=mongodb://root:${MONGO_ROOT_PASSWORD}@mongo-db:27017
+            - TYPEORM_URL=mongodb://root:${MONGO_ROOT_PASSWORD}@mongo-db:27017/Organizer-user?authSource=admin
 
     mongo-db:
         image: mongo
+        container_name: mongo-db
         restart: always
         environment:
             - MONGO_INITDB_ROOT_USERNAME=root
             - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
             - MONGO_INITDB_DATABASE=&{DB_NAME}
-        ports:
-            - '27017:27017'
+        # Se você precisar do acesso do banco em outro app
+        # ports:
+        #     - '27017:27017'
         networks:
             - organizer
 
@@ -40,4 +45,4 @@ services:
 
 networks:
     organizer:
-        driver: bridge
+        external: true
