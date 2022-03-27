@@ -10,7 +10,9 @@ export class Env {
     }
 
     public get MongoUri(): string {
-        return this.isProd ? process.env?.TYPEORM_URL.toString() : 'mongodb://root:123456@mongo-db:27017';
+        return this.isProd
+            ? process.env?.TYPEORM_URL.toString()
+            : 'mongodb://root:123456@localhost:27017/Organizer-user?authSource=admin';
     }
 
     public get MongoDBName(): string {
@@ -18,7 +20,7 @@ export class Env {
     }
 
     public get Port(): number {
-        return this.isProd ? Number(process.env?.PORT) : 3000;
+        return this.isProd ? Number(process.env?.PORT) : 3001;
     }
 
     public get bcryptSalt(): number {
