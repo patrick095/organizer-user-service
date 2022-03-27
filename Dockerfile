@@ -1,17 +1,13 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as base
 
 WORKDIR /home/node/app
 
 COPY package*.json ./
 
-COPY [^node_modules]* .
-
-ENV PORT=3000
-
-RUN npm ci
-
-RUN npm run build
-
 EXPOSE 3000
 
-CMD ["npm", "start"]
+FROM base as dev
+
+COPY . .
+
+CMD ["npm", "run dev"]

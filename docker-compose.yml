@@ -1,13 +1,20 @@
 services:
     organizer-user-service:
-        build: .
+        build:
+            context: ./
+            target: dev
         volumes:
             - .:/home/node/app
+            - node_modules:/home/node/app/node_modules
         restart: always
         env_file: .env
         networks:
             - organizer
+        command: npm run dev
 
 networks:
     organizer:
         driver: bridge
+
+volumes:
+    node_modules:
