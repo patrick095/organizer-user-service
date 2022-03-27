@@ -1,3 +1,4 @@
+import { RpcException } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
 import { Connection, createConnection } from 'typeorm';
@@ -19,12 +20,16 @@ export class MongoDB {
                     useUnifiedTopology: true,
                     entities: [`${__dirname}/../entity/*.{ts,js}`],
                     database: this.config.MongoDBName,
-                }).then(async (connection) => {
-                    // eslint-disable-next-line no-console
-                    console.log('MongoDB connected');
-                    observer.next(connection);
-                    observer.complete();
-                });
+                })
+                    .then(async (connection) => {
+                        // eslint-disable-next-line no-console
+                        console.log('MongoDB connected');
+                        observer.next(connection);
+                        observer.complete();
+                    })
+                    .catch(() => {
+                        throw new RpcException('MongoDB connection error');
+                    });
             });
         }
         return this.connection;
