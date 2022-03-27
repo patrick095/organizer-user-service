@@ -1,0 +1,13 @@
+services:
+    organizer-user-service:
+        build: .
+        volumes:
+            - .:/home/node/app
+        restart: always
+        env_file: .env
+        networks:
+            - organizer
+
+networks:
+    organizer:
+        driver: bridge
