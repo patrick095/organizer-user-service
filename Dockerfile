@@ -10,4 +10,6 @@ FROM base as dev
 
 COPY . .
 
+RUN npm install
+
 CMD ["npm", "run dev"]

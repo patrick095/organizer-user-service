@@ -5,16 +5,24 @@ services:
             target: dev
         volumes:
             - .:/home/node/app
-            - node_modules:/home/node/app/node_modules
         restart: always
         env_file: .env
         networks:
             - organizer
         command: npm run dev
+        environment:
+            - TYPEORM_URL=mongodb://root:${MONGO_ROOT_PASSWORD}@mongo-db:27017
+
+    mongo-db:
+        image: mongo
+        restart: always
+        environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+        - MONGO_INITDB_DATABASE=&{DB_NAME}
+        networks:
+        - organizer
 
 networks:
     organizer:
         driver: bridge
-
-volumes:
-    node_modules:
