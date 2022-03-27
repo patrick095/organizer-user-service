@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 
-const logger = new Logger('Microservice-user');
+const logger = new Logger('user-service');
 
 async function bootstrap() {
     const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
@@ -13,7 +13,7 @@ async function bootstrap() {
         },
     });
     await app.listen().then(() => {
-        logger.log('Microservice is listening');
+        logger.log('user-service is listening');
     });
 }
 bootstrap();
